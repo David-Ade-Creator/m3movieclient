@@ -4,7 +4,9 @@ import MovieHeader from '../../Components/header'
 function MovieDetails() {
     return (
         <MovieHeader>
-            Movie Details
+            <div className="container">
+                yesyuf
+            </div>
         </MovieHeader>
     )
 }
