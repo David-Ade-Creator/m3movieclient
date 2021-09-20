@@ -1,7 +1,7 @@
 .banner_container{
     height: 70vh;
     display: flex;
-    color: white;
+    color: #fff;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -10,6 +10,7 @@
     font-size: 2.5rem;
     font-weight: 600;
     padding-bottom: 0.3rem;
+    color: #fff;
 }
 
 .banner_description{
@@ -19,6 +20,7 @@
     font-size: 0.8rem;
     max-width: 360px;
     height: 80px;
+    color: #fff;
 }
 
 .banner_button {
@@ -56,13 +58,28 @@
     );
 }
 
-/* movie list style */
+/* movie card list style */
+.card_container{
+    background:black ;
+    padding: 1.5rem 1.7rem;
+}
+
+.card_container_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    color: white;
+}
+
 .movie_card{
     padding: 0;
     width: 100%;
     position: relative;
     transition: all .4s ease-in-out;
     height: 150px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
+
 }
 
 .movie_card img{
