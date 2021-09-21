@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { URL } from './Components/Constants';
 import MovieHome from './Pages/MoviesPage';
 import MovieDetails from './Pages/MoviesPage/details';
@@ -11,6 +11,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 function Routes() {
     return (
         <Switch>
+          <Redirect from="/" to={URL.HomePage} exact />
             <Route path={URL.SigninPage} component={LoginPage} exact/>
             <Route path={URL.SignupPage} component={RegisterPage} exact/>
             <Route path={URL.HomePage} component={MovieHome} exact/>

@@ -4,7 +4,7 @@ import { Button, Modal, Result, Select } from "antd";
 import { useHistory } from "react-router-dom";
 import Request from "../../Components/Request";
 import "./style.css";
-import { base_url, URL } from "../../Components/Constants";
+import { image_url, URL } from "../../Components/Constants";
 import LoginPage from "../Auth/login";
 import RegisterPage from "../Auth/register";
 import { MovieContext } from "../../Context/MovieContext";
@@ -123,7 +123,7 @@ function MovieHome() {
           className="banner_container"
           style={{
             backgroundSize: "cover",
-            backgroundImage: `url(${base_url}${bannerMovie?.backdrop_path})`,
+            backgroundImage: `url(${image_url}${bannerMovie?.backdrop_path})`,
             backgroundposition: "center center",
           }}
         >

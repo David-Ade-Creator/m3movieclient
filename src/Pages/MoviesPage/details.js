@@ -4,8 +4,9 @@ import axios from "axios";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 import "./style.css";
-import { base_url } from "../../Components/Constants";
+import { image_url } from "../../Components/Constants";
 import DefaultLoader from "../../Components/Loader";
+import { API_KEY } from "../../Components/Request";
 
 const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
   const [movie, setMovie] = React.useState(null);
@@ -16,7 +17,7 @@ const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
     const fetchSingleMovie = async () => {
       setMovieLoading(true);
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${selectedMovie.id}?api_key=c99d3d6e5ac285a93a293e3c400b1284&language=en-US`
+        `https://api.themoviedb.org/3/movie/${selectedMovie.id}?api_key=${API_KEY}&language=en-US`
       );
       setMovie(response.data);
       movieTrailer(movie?.title || movie?.name || movie?.original_name || " ")
@@ -57,7 +58,7 @@ const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
         <div className="container-fluid">
           <div className="row">
             <img
-              src={`${base_url}${movie?.backdrop_path}`}
+              src={`${image_url}${movie?.backdrop_path}`}
               alt="movie-backdrop"
               style={{ width: "100%", height: "400px" }}
             />

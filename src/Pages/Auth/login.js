@@ -2,6 +2,7 @@ import { Button, Modal, Form, Input, Space, Alert, Col } from "antd";
 import React from "react";
 import axios from "axios";
 import { MovieContext } from "../../Context/MovieContext";
+import { base_url } from "../../Components/Constants";
 
 function LoginPage({ isVisible, setVisible, setRegisterVisible }) {
   const { setAuthToken } = React.useContext(MovieContext);
@@ -12,7 +13,7 @@ function LoginPage({ isVisible, setVisible, setRegisterVisible }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:1100/api/m3/login`,
+        `${base_url}/api/m3/login`,
         values
       );
       const registerResponse = response?.data;

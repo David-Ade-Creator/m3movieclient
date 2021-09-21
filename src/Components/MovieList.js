@@ -1,5 +1,5 @@
 import React from "react";
-import { base_url } from "./Constants";
+import { image_url, base_url } from "./Constants";
 import axios from "axios";
 import {ExclamationCircleOutlined,PlusOutlined,CheckOutlined} from "@ant-design/icons";
 import { MovieContext } from "../Context/MovieContext";
@@ -27,7 +27,7 @@ function MovieList({ movies, myList }) {
   const addToFavourites = async (movie) => {
     try {
       const response = await axios.post(
-        `http://localhost:1100/api/m3/favourites`,
+        `${base_url}/api/m3/favourites`,
         movie
       );
       const resMovie = response.data.data;
@@ -51,7 +51,7 @@ function MovieList({ movies, myList }) {
           type: "START_FETCH_FAVOURITES",
         });
         const response = await axios.get(
-          `http://localhost:1100/api/m3/favourites`
+          `${base_url}/api/m3/favourites`
         );
         setFavouriteMovies(response.data);
       } catch (error) {
@@ -77,7 +77,7 @@ function MovieList({ movies, myList }) {
           key={movie.id}
          
         >
-          <img src={`${base_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
+          <img src={`${image_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
           <div className="movie_card_meta">
             <span
               style={{ cursor: "pointer", fontSize: ".8rem", alignItems:"center" }}
@@ -105,7 +105,7 @@ function MovieList({ movies, myList }) {
           key={movie.id}
          
         >
-          <img src={`${base_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
+          <img src={`${image_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
           <div className="movie_card_meta">
             <span
               style={{ cursor: "pointer", fontSize: ".8rem", alignItems:"center" }}
