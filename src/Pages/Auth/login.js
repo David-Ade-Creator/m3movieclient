@@ -23,7 +23,7 @@ function LoginPage({ isVisible, setVisible, setRegisterVisible }) {
       setVisible(false);
     } catch (error) {
       setLoading(false);
-      setError(error.response.data.errors);
+      setError(error.response.data.message);
     }
   };
 

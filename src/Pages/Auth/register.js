@@ -23,7 +23,7 @@ function RegisterPage({ isVisible, setVisible, setLoginVisible }) {
         setVisible(false);
         } catch (error) {
             setLoading(false);
-            setError(error.response.data.errors);
+            setError(error.response.data.message);
         }
         
       };
@@ -52,7 +52,7 @@ function RegisterPage({ isVisible, setVisible, setLoginVisible }) {
           <Col lg={24}>
           {error && <Alert type="error" message={error} />}
           </Col>
-            <Col lg={12} md={12} sm={12} xs={12} >
+            <Col lg={12} md={12} sm={12} xs={11} >
             <Form.Item
         label="First Name"
         name="firstName"
@@ -66,7 +66,7 @@ function RegisterPage({ isVisible, setVisible, setLoginVisible }) {
         <Input />
       </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={12} xs={12}>
+            <Col lg={12} md={12} sm={12} xs={11}>
             <Form.Item
         label="Last Name"
         name="lastName"
@@ -111,10 +111,10 @@ function RegisterPage({ isVisible, setVisible, setLoginVisible }) {
       >
           <Space>
         <Button loading={loading} type="ghost" htmlType="submit">
-          Login
+          Register
         </Button>
         <Button disabled={loading} onClick={toggleLoginModal} type="link" >
-        Create New Account
+        Already have an account ? Login
         </Button></Space>
       </Form.Item>
     </Form>

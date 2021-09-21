@@ -9,7 +9,7 @@ import { MovieContext } from "../../Context/MovieContext";
 import LoginPage from "../../Pages/Auth/login";
 import RegisterPage from "../../Pages/Auth/register";
 
-function MovieHeader({ toggleLogin, toggleRegister }) {
+function MovieHeader() {
   const history = useHistory();
   const { auth } = React.useContext(MovieContext);
   const [loginModal, setLoginModal] = React.useState(false);
@@ -18,7 +18,7 @@ function MovieHeader({ toggleLogin, toggleRegister }) {
 
   const menu = (
     <Menu>
-      <Menu.Item>David Adeyemi</Menu.Item>
+      {user &&<Menu.Item>{user.firstName + " " + user.lastName}</Menu.Item>}
       {!user && <Menu.Item onClick={()=>setLoginModal(true)}>Login</Menu.Item>}
       {!user && <Menu.Item onClick={()=>setRegisterModal(true)}>Register</Menu.Item>}
       {user && (
