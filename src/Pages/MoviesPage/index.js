@@ -1,71 +1,123 @@
 import React from "react";
 import axios from "axios";
-import { Select } from "antd";
+import { Button, Modal, Result, Select } from "antd";
+import { useHistory } from "react-router-dom";
 import Request from "../../Components/Request";
 import "./style.css";
-import { base_url } from "../../Components/Constants";
-import MovieDetails from "./details";
-import DefaultLoader from "../../Components/Loader";
+import { base_url, URL } from "../../Components/Constants";
 import LoginPage from "../Auth/login";
 import RegisterPage from "../Auth/register";
 import { MovieContext } from "../../Context/MovieContext";
+import MovieList from "../../Components/MovieList";
+import MovieHeader from "../../Components/Header";
+import DefaultLoader from "../../Components/Loader";
 
 const { Option } = Select;
 
 function MovieHome() {
-  const { auth, setAuthToken, movieState, dispatch} = React.useContext(MovieContext);
-  const { movies ,initializedMovies, MoviesError, loadingMovies } = movieState
-  const [selectedMovie, SetSelectedMovie] = React.useState(null);
-  const [bannerMovie, setBannerMovie] = React.useState(null);
-  const [movieDetailsVisible, setMovieDetailsVisible] = React.useState(false);
+  const history = useHistory();
+  const { auth } = React.useContext(MovieContext);
+  axios.defaults.headers.common = { Authorization: `Bearer ${auth.token}` };
+  const [movies,setMovies] = React.useState(null);
+  const [error,setError] = React.useState(null);
+  const [loading,setLoading] = React.useState(false);
 
-  console.log(movieState);
+  const [bannerMovie, setBannerMovie] = React.useState(null);
+  const [movieFilter, setMovieFilter] = React.useState("all");
+
+  const [loginModal, setLoginModal] = React.useState(false);
+  const [registerModal, setRegisterModal] = React.useState(false);
+  const user = auth.data?._doc;
+
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
 
-  const viewMovieDetails = (movie) => {
-    SetSelectedMovie(movie);
-    setMovieDetailsVisible(true);
+  const fetchAllMovies = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(Request.fetchAllMovies);
+      setMovies(response.data.results);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.errors)
+    }
   };
 
-  const closeMovieDetails = () => {
-    SetSelectedMovie(null);
-    setMovieDetailsVisible(false);
+  const fetchLatestMovies = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(Request.fetchLatestMovies);
+      setMovies(response.data.results);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.errors)
+    }
   };
 
-  const fetchData = async () => {
-    dispatch({
-      type: "START_FETCHING_MOVIES",
-    })
-    const response = await axios.get(Request.fetchDefaultMovies);
-    dispatch({
-      type: "FETCH_MOVIES",
-      payload: response.data.results
-    })
+  const fetchPopularMovies = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(Request.fetchPopularMovies);
+      setMovies(response.data.results);
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.errors);
+      setLoading(false);
+    }
+  };
+
+ 
+
+  const fetchFavouritesMovies = async () => {
+    if (user) {
+      history.push(URL.MyList);
+    } else {
+      setLoginModal(true);
+    }
+  };
+
+  const filterMovies = async () => {
+    switch (movieFilter) {
+      case "all":
+        fetchAllMovies();
+        break;
+      case "latest":
+        fetchLatestMovies();
+        break;
+      case "popular":
+        fetchPopularMovies();
+        break;
+      default:
+        fetchAllMovies();
+    }
   };
 
   React.useEffect(() => {
-    fetchData();
-  }, []);
+    filterMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movieFilter]);
 
   React.useEffect(() => {
-    if(movies)
-    setBannerMovie(movies[Math.floor(Math.random() * movies.length - 1)]);
+    if (movies)
+      setBannerMovie(movies[Math.floor(Math.random() * movies.length - 1)]);
   }, [movies]);
 
-  return !initializedMovies ? (
-    <DefaultLoader />
-  ) : (
+  return loading ? <DefaultLoader/> : (
     <div className="container-fluid p-0">
-      {movieDetailsVisible && (
-        <MovieDetails
-          selectedMovie={selectedMovie}
-          isVisible={movieDetailsVisible}
-          closeModal={closeMovieDetails}
-        />
-      )}
-      {/* <LoginPage/> */}
+      <MovieHeader />
+      <LoginPage
+        isVisible={loginModal}
+        setVisible={setLoginModal}
+        setRegisterVisible={setRegisterModal}
+      />
+      <RegisterPage
+        isVisible={registerModal}
+        setVisible={setRegisterModal}
+        setLoginVisible={setLoginModal}
+      />
       <div className="row">
         <div
           className="banner_container"
@@ -78,13 +130,9 @@ function MovieHome() {
           <div className="banner_contents">
             <h1 className="banner_title">{bannerMovie?.title}</h1>
             <div className="banner_buttons">
-              <button
-                className="banner_button"
-                onClick={() => viewMovieDetails(bannerMovie)}
-              >
-                Details
+              <button className="banner_button" onClick={fetchFavouritesMovies}>
+                My Favourites
               </button>
-              <button className="banner_button">My List</button>
               <h1 className="banner_description">
                 {truncate(bannerMovie?.overview, 150)}
               </h1>
@@ -94,41 +142,41 @@ function MovieHome() {
           <div className="banner_fadeBottom"></div>
         </div>
       </div>
-      <div className="row card_container">
+      {error && <Modal
+      visible={true}
+      closable={false}
+      footer={null} 
+      >
+      <Result
+    status="error"
+    title="Unable to load movies"
+    extra={[
+      <Button type="primary" key="console">
+        Try Again
+      </Button>
+    ]}
+  >
+  </Result>
+      </Modal>}
+      <div className="row filter-row">
         <div className="col-lg-12">
-          <div
-          className="card_container_header"
-          >
-            <span style={{ fontSize: "1.2rem" }}>CapitalMovies</span>
+          <div className="card_container_header">
+            <span style={{ fontSize: "1.2rem" }}>{movieFilter.toUpperCase() + " MOVIES"}</span>
             <span>
               <Select
-                defaultValue="all"
+                value={movieFilter}
                 style={{ width: 120 }}
-                onChange={(v) => console.log(v)}
+                onChange={(v) => setMovieFilter(v)}
               >
                 <Option value="all">All</Option>
                 <Option value="popular">Popular</Option>
                 <Option value="latest">Latest</Option>
-                <Option value="favourites">Favourites</Option>
               </Select>
             </span>
           </div>
         </div>
-        {movies.map((movie) => (
-          <div className="col-lg-3 mb-3 movie_card" key={movie.id}>
-            <img src={`${base_url}${movie.backdrop_path}`} alt={movie.title} />
-            <div className="movie_card_meta">
-              <span
-                style={{ cursor: "pointer", fontSize: ".8rem" }}
-                onClick={() => viewMovieDetails(movie)}
-              >
-                {movie?.title || movie?.name || movie?.original_name}
-              </span>{" "}
-              <span style={{ cursor: "pointer" }}>+</span>
-            </div>
-          </div>
-        ))}
       </div>
+      <MovieList movies={movies} />
     </div>
   );
 }

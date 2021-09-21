@@ -1,33 +1,45 @@
 import React from 'react';
 import axios from "axios";
-import { Button, Modal, Form, Input, Space, Row, Col } from 'antd'
+import { Button, Modal, Form, Input, Space, Row, Col, Alert } from 'antd'
+import { MovieContext } from '../../Context/MovieContext';
 
 
-function RegisterPage() {
+function RegisterPage({ isVisible, setVisible, setLoginVisible }) {
+    const { setAuthToken, } = React.useContext(MovieContext);
     const [loading,setLoading] = React.useState(false);
+    const [error,setError] = React.useState(null);
+
 
     const onFinish = async (values) => {
         try {
         setLoading(true);
         const response = await axios.post(`http://localhost:1100/api/m3/register`, values);
         const registerResponse = response?.data;
-        const {data, token} = registerResponse;
-        console.log(data,token)
-        setLoading(false)
+        const {data} = registerResponse;
+        setAuthToken(data.token)
+        setError(null);
+        setLoading(false);
+        setVisible(false);
         } catch (error) {
             setLoading(false);
-            console.log(error.response.data.errors);
+            setError(error.response.data.errors);
         }
         
+      };
+
+
+      const toggleLoginModal = () => {
+        setVisible(false);
+        setLoginVisible(true);
       };
     
    
 
     return (
         <Modal 
-        // onCancel={closeModal}
+        onCancel={()=>setVisible(false)}
         closable={false}
-        visible={true}
+        visible={isVisible}
         footer={null}>
                <Form
       name="Login"
@@ -36,6 +48,9 @@ function RegisterPage() {
       autoComplete="off"
     >
         <Row gutter={10}>
+          <Col lg={24}>
+          {error && <Alert type="error" message={error} />}
+          </Col>
             <Col lg={12} md={12} sm={12} xs={12} >
             <Form.Item
         label="First Name"
@@ -97,7 +112,7 @@ function RegisterPage() {
         <Button loading={loading} type="ghost" htmlType="submit">
           Login
         </Button>
-        <Button disabled={loading} type="link" >
+        <Button disabled={loading} onClick={toggleLoginModal} type="link" >
         Create New Account
         </Button></Space>
       </Form.Item>

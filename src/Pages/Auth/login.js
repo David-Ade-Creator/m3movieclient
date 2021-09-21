@@ -1,77 +1,95 @@
-import { Button, Modal, Form, Input, Space } from 'antd'
-import React from 'react';
-import axios from 'axios';
+import { Button, Modal, Form, Input, Space, Alert, Col } from "antd";
+import React from "react";
+import axios from "axios";
+import { MovieContext } from "../../Context/MovieContext";
 
-function LoginPage(){
-    const [loading,setLoading] = React.useState(false);
+function LoginPage({ isVisible, setVisible, setRegisterVisible }) {
+  const { setAuthToken } = React.useContext(MovieContext);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
-    const onFinish = async (values) => {
-        try {
-        setLoading(true);
-        const response = await axios.post(`http://localhost:1100/api/m3/login`, values);
-        const registerResponse = response?.data;
-        const {data, token} = registerResponse;
-        console.log(data,token)
-        setLoading(false)
-        } catch (error) {
-            setLoading(false);
-            console.log(error.response.data.errors);
-        }
-        
-      };
- 
+  const onFinish = async (values) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `http://localhost:1100/api/m3/login`,
+        values
+      );
+      const registerResponse = response?.data;
+      const { data } = registerResponse;
+      setAuthToken(data.token);
+      setLoading(false);
+      setVisible(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.errors);
+    }
+  };
 
-    return (
-        <Modal 
-        // onCancel={closeModal}
-        closable={false}
-        visible={true}
-        footer={null}>
-               <Form
-      name="Login"
-      layout="vertical"
-      onFinish={onFinish}
-      autoComplete="off"
+  const toggleRegisterModal = () => {
+    setVisible(false);
+    setRegisterVisible(true);
+  };
+
+  return (
+    <Modal
+      onCancel={() => setVisible(false)}
+      closable={false}
+      visible={isVisible}
+      footer={null}
     >
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your email!',
-          },
-        ]}
+      <Form
+        name="Login"
+        layout="vertical"
+        onFinish={onFinish}
+        autoComplete="off"
       >
-        <Input />
-      </Form.Item>
+        <Col lg={24}>
+          {error && <Alert type="error" message={error} />}
+          </Col>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please input your email!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item className="mt-3"
-      >
+        <Form.Item className="mt-3">
           <Space>
-        <Button loading={loading} type="ghost" htmlType="submit">
-          Login
-        </Button>
-        <Button disabled={loading} type="link" >
-        Create New Account
-        </Button></Space>
-      </Form.Item>
-    </Form>
-        </Modal>
-    )
+            <Button loading={loading} type="ghost" htmlType="submit">
+              Login
+            </Button>
+            <Button
+              disabled={loading}
+              onClick={toggleRegisterModal}
+              type="link"
+            >
+              Create New Account
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 }
 
 export default LoginPage;

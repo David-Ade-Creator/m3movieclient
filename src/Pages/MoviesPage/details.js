@@ -3,13 +3,14 @@ import { Modal, Tag, Space } from "antd";
 import axios from "axios";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
-import Request from "../../Components/Request";
 import "./style.css";
 import { base_url } from "../../Components/Constants";
+import DefaultLoader from "../../Components/Loader";
 
 const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
   const [movie, setMovie] = React.useState(null);
   const [movieLoading, setMovieLoading] = React.useState(false);
+  const [trailerUrl, setTrailerUrl] = React.useState("");
 
   React.useEffect(() => {
     const fetchSingleMovie = async () => {
@@ -18,11 +19,17 @@ const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
         `https://api.themoviedb.org/3/movie/${selectedMovie.id}?api_key=c99d3d6e5ac285a93a293e3c400b1284&language=en-US`
       );
       setMovie(response.data);
+      movieTrailer(movie?.title || movie?.name || movie?.original_name || " ")
+        .then((url) => {
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
+        })
+        .catch((error) => console.log(error));
       setMovieLoading(false);
       console.log(response);
     };
     fetchSingleMovie();
-  }, [selectedMovie]);
+  }, [movie?.name, movie?.original_name, movie?.title, selectedMovie]);
 
   const opts = {
     height: "390",
@@ -45,7 +52,7 @@ const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
       footer={null}
     >
       {!movie && movieLoading ? (
-        <>loading ...</>
+        <DefaultLoader />
       ) : (
         <div className="container-fluid">
           <div className="row">
@@ -80,7 +87,7 @@ const MovieDetails = ({ selectedMovie, closeModal, isVisible }) => {
               <h6 style={{ color: "white" }}>Trailer</h6>
             </div>
             <div className="col-lg-12">
-              <YouTube videoId="Cinderalla" opts={opts} />
+              <YouTube videoId={trailerUrl} opts={opts} />
             </div>
           </div>
         </div>

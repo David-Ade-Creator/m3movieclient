@@ -6,6 +6,7 @@ import MovieDetails from './Pages/MoviesPage/details';
 import MyList from './Pages/Profile/mylist';
 import LoginPage from "./Pages/Auth/login";
 import RegisterPage from "./Pages/Auth/register";
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function Routes() {
     return (
@@ -14,7 +15,13 @@ function Routes() {
             <Route path={URL.SignupPage} component={RegisterPage} exact/>
             <Route path={URL.HomePage} component={MovieHome} exact/>
             <Route path={URL.DetailPage} component={MovieDetails} exact/>
-            <Route path={URL.MyList} component={MyList} exact/>
+            <Route
+          exact
+          path={URL.MyList}
+          render={(props) => (
+            <ProtectedRoute {...props} Component={MyList} />
+          )}
+        />
         </Switch>
     )
 }
