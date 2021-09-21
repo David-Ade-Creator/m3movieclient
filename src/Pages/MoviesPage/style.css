@@ -78,13 +78,21 @@
 }
 
 .movie_card{
-    padding: 0;
+    padding: .5rem;
+    margin-bottom: .6rem;
     width: 100%;
     position: relative;
     transition: all .4s ease-in-out;
     height: 150px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     cursor: pointer;
+}
+
+@media screen and (max-width:991px) {
+    .movie_card{
+        padding: .2rem;
+        
+    } 
 }
 
 .movie_card img{

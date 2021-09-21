@@ -4,7 +4,8 @@ import axios from "axios";
 import {ExclamationCircleOutlined,PlusOutlined,CheckOutlined} from "@ant-design/icons";
 import { MovieContext } from "../Context/MovieContext";
 import MovieDetails from "../Pages/MoviesPage/details";
-import { message } from "antd";
+import { message, Row , Col} from "antd";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function MovieList({ movies, myList }) {
   const { dispatch, auth } = React.useContext(MovieContext);
@@ -63,6 +64,9 @@ function MovieList({ movies, myList }) {
 
   return (
     <div className="row card_container">
+      <Row>
+
+      
       {movieDetailsVisible && (
         <MovieDetails
           selectedMovie={selectedMovie}
@@ -72,10 +76,9 @@ function MovieList({ movies, myList }) {
       )}
       {myList ? <>
         {favouriteMovies?.map((movie) => (
-        <div
-          className="col-lg-3 col-md-4 col-sm-6 col-6 mb-3 movie_card"
+        <Col lg={6} md={8} sm={8} xs={12}
+          className="movie_card"
           key={movie.id}
-         
         >
           <img src={`${image_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
           <div className="movie_card_meta">
@@ -97,14 +100,13 @@ function MovieList({ movies, myList }) {
              {favouriteMovies?.some(singleMovie => singleMovie.id === movie.id) ? < CheckOutlined style={{marginBottom:".4rem"}}/> : <PlusOutlined style={{margin:".4rem .5rem .4rem 0",display:"flex"}} />}
             </span>
           </div>
-        </div>
+        </Col>
       ))}
       </> : <>{movies?.map((movie) => (
-        <div
-          className="col-lg-3 col-md-4 col-sm-6 col-6 mb-3 movie_card"
-          key={movie.id}
-         
-        >
+        <Col lg={6} md={8} sm={8} xs={12}
+        className="movie_card"
+        key={movie.id}
+      >
           <img src={`${image_url}${movie.backdrop_path}`} alt={movie.title}  onClick={() => viewMovieDetails(movie)} />
           <div className="movie_card_meta">
             <span
@@ -125,9 +127,9 @@ function MovieList({ movies, myList }) {
              {favouriteMovies?.some(singleMovie => singleMovie.id === movie.id) ? < CheckOutlined style={{marginBottom:".4rem"}}/> : <PlusOutlined style={{margin:".4rem .5rem .4rem 0",display:"flex"}} />}
             </span>
           </div>
-        </div>
+        </Col>
       ))}</>}
-      
+      </Row>
     </div>
   );
 }

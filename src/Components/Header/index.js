@@ -1,5 +1,4 @@
 import { Avatar, Dropdown, Menu } from "antd";
-import { useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +9,6 @@ import LoginPage from "../../Pages/Auth/login";
 import RegisterPage from "../../Pages/Auth/register";
 
 function MovieHeader() {
-  const history = useHistory();
   const { auth } = React.useContext(MovieContext);
   const [loginModal, setLoginModal] = React.useState(false);
   const [registerModal, setRegisterModal] = React.useState(false);
@@ -21,11 +19,6 @@ function MovieHeader() {
       {user &&<Menu.Item>{user.firstName + " " + user.lastName}</Menu.Item>}
       {!user && <Menu.Item onClick={()=>setLoginModal(true)}>Login</Menu.Item>}
       {!user && <Menu.Item onClick={()=>setRegisterModal(true)}>Register</Menu.Item>}
-      {user && (
-        <Menu.Item onClick={() => history.push(URL.MyList)}>
-          Favourites
-        </Menu.Item>
-      )}
     </Menu>
   );
 
