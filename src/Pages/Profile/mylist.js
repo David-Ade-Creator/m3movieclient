@@ -12,6 +12,7 @@ function MyList() {
     const [favouriteMovies,setFavouriteMovies] = React.useState(null);
     axios.defaults.headers.common = { Authorization: `Bearer ${auth.token}` };
     const user = auth.data?._doc;
+    console.log(user);
 
     React.useEffect(()=>{
         if(!auth)
