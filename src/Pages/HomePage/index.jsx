@@ -1,5 +1,6 @@
 import { Space } from "antd";
 import PageHeader from "Components/Header";
+import Rowcontainer from "Components/LayoutComponents/Rowcontainer";
 import React from "react";
 
 function HomePage() {
@@ -25,6 +26,8 @@ function HomePage() {
           </div>
         </div>
       </div>
+      <Rowcontainer />
+      <Rowcontainer />
     </PageHeader>
   );
 }

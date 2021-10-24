@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "Assets/css/index.css";
+import "react-multi-carousel/lib/styles.css";
 
 ReactDOM.render(
   <React.StrictMode>

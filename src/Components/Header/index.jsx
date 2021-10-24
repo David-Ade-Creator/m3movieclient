@@ -1,20 +1,29 @@
 import React from 'react';
 
 function PageHeader({children}) {
+    const [isNavbarOpen, setNavbarOpen] = React.useState(false);
+
+    const toggleNavbar = () =>{
+        setNavbarOpen(!isNavbarOpen)
+    }
+
     return (
         <React.Fragment>
         <header class="header" id="header">
             <div className="header_container container">
-            <div class="header__toggle">
-                <i class='bx bx-menu' id="header-toggle"></i>
-            </div>
 
             <div class="header__img">
                 <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" alt=""/>
             </div>
+
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle" onClick={toggleNavbar}></i>
+            </div>
+
+            
             </div>
         </header>
-        <div class="l-navbar" id="nav-bar">
+        <div class={`l-navbar ${isNavbarOpen ? "show" : ""}`} id="nav-bar">
             <nav class="nav">
                 <div>
                     <a href="/" class="nav__logo">
