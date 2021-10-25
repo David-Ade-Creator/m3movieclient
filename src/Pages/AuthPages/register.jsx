@@ -1,14 +1,39 @@
-import { Card, Col, Form, Input, Row } from "antd";
+import { Button, Card, Col, Form, Input, Row } from "antd";
+import axios from "axios";
+import { base_url } from "Components/Data";
+import { MovieContext } from "Context/MovieContext";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function RegisterPage() {
+    const history = useHistory()
+    const { setAuthToken, } = React.useContext(MovieContext);
+    const [loading,setLoading] = React.useState(false);
+    const [error,setError] = React.useState(null);
+
+
+    const onFinish = async (values) => {
+        try {
+        setLoading(true);
+        const response = await axios.post(`${base_url}/api/m3/register`, values);
+        const registerResponse = response?.data;
+        const {data} = registerResponse;
+        setAuthToken(data.token)
+        setError(null);
+        history.push("/")
+        setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error.response.data.message);
+        }
+        
+      };
   return (
     <div className="login_container">
       <div className="login_form_container">
         <div className="form_container">
           <Card>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
               <h1 style={{ marginBottom: "1rem", fontWeight: "bolder" }}>
                 Create New Account
               </h1>
@@ -87,8 +112,12 @@ function RegisterPage() {
                   </Form.Item>
                 </Col>
               </Row>
-
-              <span className="auth_button">Sign Up</span>
+              <Button htmlType="submit" type="danger" loading={loading}>Create Account</Button>
+              <div className="already_signin_mini">
+            <Link to="/login">
+              <h4>Already have an account ? Login</h4>
+            </Link>
+          </div>
             </Form>
           </Card>
         </div>

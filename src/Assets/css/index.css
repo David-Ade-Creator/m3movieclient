@@ -304,7 +304,7 @@
   /* login page style */
 .login_container{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   height: 100vh;
 }
 
@@ -315,12 +315,25 @@
   align-items: center;
 }
 
+.login_form_design{
+  display: none;
+}
+
+.form_container{
+  width: 90%;
+}
+
 .auth_button{
   width: 100%;
   background-color: var(--first-color);
   color: var(--white-color);
   padding: .5rem 1rem;
   border-radius: 5px;
+}
+
+.already_signin_mini{
+  margin-top: 1rem;
+  font-weight: bold;
 }
 
 
@@ -450,6 +463,13 @@
       border-radius: 15px;
     }
 
+     /* login page style */
+.login_container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
 
     .login_form_design{
       height: 100%;
@@ -509,6 +529,10 @@
       color: white;
       font-weight: bolder;
       cursor: pointer;
+    }
+
+    .already_signin_mini{
+      display: none;
     }
 
     .form_container{

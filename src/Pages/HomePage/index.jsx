@@ -3,7 +3,8 @@ import PageHeader from "Components/Header";
 import Rowcontainer from "Components/LayoutComponents/Rowcontainer";
 import React from "react";
 
-function HomePage() {
+function HomePage(){
+
   return (
     <PageHeader>
       <div className="homepage_container container">
@@ -26,8 +27,14 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <Rowcontainer />
-      <Rowcontainer />
+      <Rowcontainer title="NETFLIX ORIGINALS" />
+      <Rowcontainer title="Trending Now" />
+      <Rowcontainer title="Top Rated" />
+      <Rowcontainer title="Action Movies" />
+      <Rowcontainer title="Comedy Movies" />
+      <Rowcontainer title="Horror Movies" />
+      <Rowcontainer title="Romance Movies"/>
+      <Rowcontainer title="Documentaries"/>
     </PageHeader>
   );
 }

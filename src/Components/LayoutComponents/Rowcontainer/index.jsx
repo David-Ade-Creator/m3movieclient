@@ -48,11 +48,11 @@ const images = [
 
 // Because this is an inframe, so the SSR mode doesn't not do well here.
 // It will work on real devices.
-const Rowcontainer = ({ deviceType }) => {
+const Rowcontainer = ({ deviceType, title }) => {
   return (
       <div className="container rowcontainer">
           <div className="row_title">
-              <h3>Top Rated</h3>
+              <h3>{title}</h3>
           </div>
     <Carousel
       additionalTransfrom={0}
