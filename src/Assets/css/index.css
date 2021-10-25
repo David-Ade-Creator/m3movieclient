@@ -80,6 +80,7 @@
     background-color: var(--white-color);
     z-index: var(--z-fixed);
     transition: .5s;
+    z-index: 100;
   }
 
   .header_container{
@@ -210,7 +211,7 @@
   }
 
   .homepage_banner{
-      height: 40vh;
+      height: 35vh;
       border-radius: 35px;
       position: relative;
       display: flex;
@@ -241,7 +242,7 @@
 
   .homepage_img img{
       width: 100%;
-      height: 40vh;
+      height: 35vh;
       border-radius: 35px;
       object-position: center;
   }
@@ -298,6 +299,7 @@
     border-radius: 15px;
     transition: .4s;
     cursor: pointer;
+    z-index: 10;
   }
 
 
@@ -342,7 +344,7 @@
   @media screen and (min-width: 280px) {
     .carousel-container img{
       width: 80px;
-      height: 120px;
+      height: 110px;
       border-radius: 15px;
     }
   }
@@ -350,7 +352,7 @@
   @media screen and (min-width: 300px) {
     .carousel-container img{
       width: 90px;
-      height: 140px;
+      height: 120px;
       border-radius: 15px;
     }
   }
@@ -358,7 +360,7 @@
   @media screen and (min-width: 350px) {
     .carousel-container img{
       width: 110px;
-      height: 140px;
+      height: 120px;
       border-radius: 15px;
     }
   }
