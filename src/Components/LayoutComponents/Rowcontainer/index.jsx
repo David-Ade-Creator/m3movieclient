@@ -63,7 +63,7 @@ const Rowcontainer = ({ deviceType }) => {
       dotListClass=""
       draggable
       focusOnSelect={false}
-      infinite={true}
+      infinite={false}
       itemClass=""
       keyBoardControl
       minimumTouchDrag={80}

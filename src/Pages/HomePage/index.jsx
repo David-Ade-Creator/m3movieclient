@@ -17,7 +17,7 @@ function HomePage() {
           <div className="homepage_description">
               <h2 className="homepage_title">The Witcher</h2>
               <p>This is the fast and furios description and to be honest i don't even know what to write but anyway i will just do my best and see if it is fine...</p>
-              <div>
+              <div className="homepage_btn_container">
                   <Space>
                       <span className="button_primary">Details</span>
                       <span className="button_default"><i class='bx bx-plus' ></i></span>
