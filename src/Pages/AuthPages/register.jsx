@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 
 function RegisterPage() {
     const history = useHistory()
-    const { setAuthToken, } = React.useContext(MovieContext);
+    const { auth,setAuthToken, } = React.useContext(MovieContext);
     const [loading,setLoading] = React.useState(false);
     const [error,setError] = React.useState(null);
 
@@ -28,6 +28,12 @@ function RegisterPage() {
         }
         
       };
+
+      React.useEffect(()=>{
+        if(auth.data) history.push("/");
+      },[auth.data, history]);
+
+
   return (
     <div className="login_container">
       <div className="login_form_container">

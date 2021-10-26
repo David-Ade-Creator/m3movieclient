@@ -1,40 +1,87 @@
 import { Space } from "antd";
+import axios from "axios";
+import { image_url } from "Components/Data";
+import requests from "Components/Data/requests";
 import PageHeader from "Components/Header";
 import Rowcontainer from "Components/LayoutComponents/Rowcontainer";
+import { MovieContext } from "Context/MovieContext";
 import React from "react";
 
-function HomePage(){
+function HomePage() {
+  const { auth } = React.useContext(MovieContext);
+  axios.defaults.headers.common = { Authorization: `Bearer ${auth.token}` };
+  const [loading, setLoading] = React.useState(false);
+  const [bannerMovie, setBannerMovie] = React.useState(undefined);
+
+  React.useEffect(() => {
+    const fetchFavouritesMoviesData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(requests.fetchNetflixOriginals);
+        setBannerMovie(
+          response?.data?.results[
+            Math.floor(Math.random() * response?.data?.results.length)
+          ]
+        );
+        setLoading(false);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+    fetchFavouritesMoviesData();
+  }, []);
+
+  function truncate(str, n) {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
 
   return (
-    <PageHeader>
+    <PageHeader pageLoading={loading}>
       <div className="homepage_container container">
         <div className="homepage_banner">
           <div className="homepage_img">
-            <img
-              src="https://theenvoyweb.com/wp-content/uploads/2021/06/The-Witcher-2.jpg"
-              alt=""
-            />
+            <img src={image_url + bannerMovie?.backdrop_path} alt="" />
           </div>
           <div className="homepage_description">
-              <h2 className="homepage_title">The Witcher</h2>
-              <p>This is the fast and furios description and to be honest i don't even know what to write but anyway i will just do my best and see if it is fine...</p>
-              <div className="homepage_btn_container">
-                  <Space>
-                      <span className="button_primary">Details</span>
-                      <span className="button_default"><i class='bx bx-plus' ></i></span>
-                  </Space>
-              </div>
+            <h2 className="homepage_title">{bannerMovie?.title}</h2>
+            <p>{truncate(bannerMovie?.overview, 150)}</p>
+            <div className="homepage_btn_container">
+              <Space>
+                <span className="button_primary">Details</span>
+                <span className="button_default">
+                  <i class="bx bx-plus"></i>
+                </span>
+              </Space>
+            </div>
           </div>
         </div>
       </div>
-      <Rowcontainer title="NETFLIX ORIGINALS" />
-      <Rowcontainer title="Trending Now" />
-      <Rowcontainer title="Top Rated" />
-      <Rowcontainer title="Action Movies" />
-      <Rowcontainer title="Comedy Movies" />
-      <Rowcontainer title="Horror Movies" />
-      <Rowcontainer title="Romance Movies"/>
-      <Rowcontainer title="Documentaries"/>
+      <Rowcontainer
+        title="NETFLIX ORIGINALS"
+        fetchUrl={requests.fetchNetflixOriginals}
+      />
+      <Rowcontainer title="Trending Now" fetchUrl={requests.fetchTrending} />
+      <Rowcontainer title="Top Rated" fetchUrl={requests.fetchTopRated} />
+      <Rowcontainer
+        title="Action Movies"
+        fetchUrl={requests.fetchActionMovies}
+      />
+      <Rowcontainer
+        title="Comedy Movies"
+        fetchUrl={requests.fetchComedyMovies}
+      />
+      <Rowcontainer
+        title="Horror Movies"
+        fetchUrl={requests.fetchHorrorMovies}
+      />
+      <Rowcontainer
+        title="Romance Movies"
+        fetchUrl={requests.fetchRomanceMovies}
+      />
+      <Rowcontainer
+        title="Documentaries"
+        fetchUrl={requests.fetchDocumentaries}
+      />
     </PageHeader>
   );
 }
