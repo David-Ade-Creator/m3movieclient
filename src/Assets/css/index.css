@@ -252,7 +252,7 @@
       z-index: 3;
       width: 100%;
       padding: 0 1rem;
-      margin-top: 3rem;
+      margin-top: 2rem;
       font-size: .8rem;
       color: var(--white-color);
   }
@@ -291,6 +291,29 @@
   ::-webkit-scrollbar-thumb:hover {
     background-color: var(--third-color);
   }
+
+
+  /* ===== loaders ====== */
+  .loader_flexbox {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nb-spinner {
+    width: 75px;
+    height: 75px;
+    margin: 0;
+    background: transparent;
+    border-top: 4px solid var(--first-color);
+    border-right: 4px solid transparent;
+    border-radius: 50%;
+    -webkit-animation: 1s spin linear infinite;
+    animation: 1s spin linear infinite;
+  }
   
 
   /* row carousel style */
@@ -305,6 +328,21 @@
     object-position: center;
   }
 
+
+  /* ====details style ==== */
+  .details_img{
+    width: 100%;
+    height: 200px;
+  }
+
+  .details_title{
+    margin: .5rem 0;
+  }
+
+  .details_desc{
+    padding: 5px 0;
+    margin: 0;
+  }
 
   /* login page style */
 .login_container{
@@ -452,7 +490,7 @@
         z-index: 3;
         width: 50%;
         padding: 0 1rem;
-        margin-top: 7rem;
+        margin-top: 9rem;
           font-size: 1.05rem;
         color: var(--white-color);
     }
@@ -467,6 +505,12 @@
       width: 120px;
       height: 150px;
       border-radius: 15px;
+    }
+
+
+    .details_img{
+      width: 100%;
+      height: 400px;
     }
 
      /* login page style */

@@ -1,7 +1,9 @@
+import DetailLoader from "Components/LayoutComponents/Loaders/detailLoader";
 import React from "react";
 import { Link } from "react-router-dom";
 
 function PageHeader({ children, pageLoading }) {
+  console.log(pageLoading)
   const [isNavbarOpen, setNavbarOpen] = React.useState(false);
 
   const toggleNavbar = () => {
@@ -83,7 +85,7 @@ function PageHeader({ children, pageLoading }) {
         </nav>
       </div>
       <main className="body-pd">
-          {pageLoading ? <>loading...</> : children}
+          {pageLoading ? <DetailLoader/> : children}
         </main>
     </React.Fragment>
   );

@@ -39,7 +39,7 @@ function AuthPage() {
       <div className="login_form_container">
         <div className="form_container">
           <Card>
-          <Alert type="error" message={error} />
+          {error && <Alert type="error" message={error} />}
             <Form layout="vertical" onFinish={onFinish}>
               <h1 style={{ marginBottom: "1rem", fontWeight: "bolder" }}>
                 Login
@@ -66,7 +66,7 @@ function AuthPage() {
                   },
                 ]}
               >
-                <Input placeholder="Enter your password" />
+                <Input.Password placeholder="Enter your password" />
               </Form.Item>
               <Button htmlType="submit" type="danger" loading={loading}>Login</Button>
               <div className="already_signin_mini">

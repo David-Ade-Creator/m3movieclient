@@ -4,6 +4,7 @@ import "Assets/css/index.css"
 import axios from "axios";
 import { image_url } from "Components/Data";
 import { MovieContext } from "Context/MovieContext";
+import MovieDetails from "Pages/HomePage/details";
 
 const responsive = {
   desktop: {
@@ -28,6 +29,18 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
     axios.defaults.headers.common = { Authorization: `Bearer ${auth.token}` };
   const [movies,setMovies] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [movieDetailsVisible, setMovieDetailsVisible] = React.useState(false);
+  const [selectedMovie, SetSelectedMovie] = React.useState(null);
+
+  const viewMovieDetails = (movie) => {
+    SetSelectedMovie(movie);
+    setMovieDetailsVisible(true);
+  };
+
+  const closeMovieDetails = () => {
+    SetSelectedMovie(null);
+    setMovieDetailsVisible(false);
+  };
 
   React.useEffect(() => {
     const fetchFavouritesMoviesData = async () => {
@@ -45,6 +58,11 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
 
   return (
       <div className="container rowcontainer">
+        {movieDetailsVisible && <MovieDetails
+          selectedMovie={selectedMovie}
+          isVisible={movieDetailsVisible}
+          closeModal={closeMovieDetails}
+        />}
           <div className="row_title">
               <h3>{title}</h3>
           </div>
@@ -71,6 +89,7 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
       {movies?.map(movie => {
         return (
           <img
+          onClick={() => viewMovieDetails(movie)}
             className="carousel_img"
             src={`${image_url}${movie.backdrop_path}`} alt={movie.title} 
           />

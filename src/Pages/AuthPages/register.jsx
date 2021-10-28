@@ -39,6 +39,7 @@ function RegisterPage() {
       <div className="login_form_container">
         <div className="form_container">
           <Card>
+          {error && <Alert type="error" message={error} />}
             <Alert type="error" message={error} />
             <Form layout="vertical" onFinish={onFinish}>
               <h1 style={{ marginBottom: "1rem", fontWeight: "bolder" }}>
@@ -100,7 +101,7 @@ function RegisterPage() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter your password" />
+                    <Input.Password placeholder="Enter your password" />
                   </Form.Item>
                 </Col>
 
@@ -115,7 +116,7 @@ function RegisterPage() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter your password again" />
+                    <Input.Password placeholder="Enter your password again" />
                   </Form.Item>
                 </Col>
               </Row>

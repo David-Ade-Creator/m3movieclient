@@ -1,6 +1,7 @@
 const API_KEY = "c99d3d6e5ac285a93a293e3c400b1284";
 
 const requests = {
+    allMovies : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`,
     fetchTrending: `https://api.themoviedb.org/3/trending/a;;/week?api_key=${API_KEY}&language=en-US`,
     fetchNetflixOriginals: `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&with_networks=213`,
     fetchTopRated: `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US`,
