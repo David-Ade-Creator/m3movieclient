@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input } from "antd";
+import { Alert, Button, Card, Form, Input } from "antd";
 import axios from "axios";
 import { base_url } from "Components/Data";
 import { MovieContext } from "Context/MovieContext";
@@ -39,6 +39,7 @@ function AuthPage() {
       <div className="login_form_container">
         <div className="form_container">
           <Card>
+          <Alert type="error" message={error} />
             <Form layout="vertical" onFinish={onFinish}>
               <h1 style={{ marginBottom: "1rem", fontWeight: "bolder" }}>
                 Login

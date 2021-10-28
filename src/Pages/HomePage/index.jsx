@@ -12,6 +12,8 @@ function HomePage() {
   axios.defaults.headers.common = { Authorization: `Bearer ${auth.token}` };
   const [loading, setLoading] = React.useState(false);
   const [bannerMovie, setBannerMovie] = React.useState(undefined);
+  
+  console.log(bannerMovie)
 
   React.useEffect(() => {
     const fetchFavouritesMoviesData = async () => {
@@ -43,7 +45,7 @@ function HomePage() {
             <img src={image_url + bannerMovie?.backdrop_path} alt="" />
           </div>
           <div className="homepage_description">
-            <h2 className="homepage_title">{bannerMovie?.title}</h2>
+            <h2 className="homepage_title">{bannerMovie?.original_name}</h2>
             <p>{truncate(bannerMovie?.overview, 150)}</p>
             <div className="homepage_btn_container">
               <Space>

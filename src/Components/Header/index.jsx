@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function PageHeader({ children, pageLoading }) {
   const [isNavbarOpen, setNavbarOpen] = React.useState(false);
@@ -31,10 +32,10 @@ function PageHeader({ children, pageLoading }) {
               <span class="nav__logo-name">M3Movies</span>
             </a>
 
-            <a href="/" class="nav__link">
+            <Link to="/favourites" class="nav__link">
               <i class="bx bx-bookmark nav__icon"></i>
               <span class="nav__name">Favourites</span>
-            </a>
+            </Link>
 
             <div class="nav__list">
               <a href="/" class="nav__link active">
