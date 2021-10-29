@@ -50,6 +50,7 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
         setMovies(response?.data?.results);
         setLoading(false)
       } catch (error) {
+        setLoading(false)
         console.log(error.response)
       }
     };
@@ -76,19 +77,18 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
       draggable
       focusOnSelect={false}
       infinite={false}
-      itemClass=""
       keyBoardControl
       minimumTouchDrag={80}
       renderButtonGroupOutside
       renderDotsOutside={false}
       responsive={responsive}
       showDots={false}
-      sliderClass=""
       slidesToSlide={1}
     >
       {movies?.map(movie => {
         return (
           <img
+          key={movie.id}
           onClick={() => viewMovieDetails(movie)}
             className="carousel_img"
             src={`${image_url}${movie.backdrop_path}`} alt={movie.title} 

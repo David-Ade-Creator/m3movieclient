@@ -5,6 +5,7 @@ import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 import axios from "axios";
 import DetailLoader from "Components/LayoutComponents/Loaders/detailLoader";
+import AddFavourite from "Components/LayoutComponents/AddFavourite";
 
 function MovieDetails({ selectedMovie, closeModal, isVisible }) {
   const [movie, setMovie] = React.useState(null);
@@ -25,7 +26,6 @@ function MovieDetails({ selectedMovie, closeModal, isVisible }) {
         })
         .catch((error) => console.log(error));
       setMovieLoading(false);
-      console.log(response);
     };
     fetchSingleMovie();
   }, [movie?.name, movie?.original_name, movie?.title, selectedMovie]);
@@ -53,21 +53,25 @@ function MovieDetails({ selectedMovie, closeModal, isVisible }) {
               />
             </Col>
             <Col>
-              <h2 className="details_title">{movie?.original_title}</h2>
+            <div style={{display:"flex"}}>
+            <h2 className="details_title">{movie?.original_title} </h2>
+            <div style={{padding:".9rem"}}><AddFavourite movie={movie} /></div>
+            </div>
+              
               <Space>
                 <Tag color="blue">{movie?.vote_average}</Tag>{" "}
                 <Tag>{movie?.release_date}</Tag>
               </Space>
               <p className="details_desc">
                 Language :{" "}
-                {movie?.spoken_languages.map((language) => (
-                  <span style={{ marginRight: ".5rem" }}>{language.name}</span>
+                {movie?.spoken_languages.map((language,i) => (
+                  <span key={i} style={{ marginRight: ".5rem" }}>{language.name}</span>
                 ))}
               </p>
               <p className="details_desc">
                 Production Company :{" "}
-                {movie?.production_companies.map((company) => (
-                  <span style={{ marginRight: ".5rem" }}>{company.name}</span>
+                {movie?.production_companies.map((company,i) => (
+                  <span key={i} style={{ marginRight: ".5rem" }}>{company.name}</span>
                 ))}
               </p>
               <p>{movie?.overview}</p>

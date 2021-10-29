@@ -10,6 +10,7 @@ function ProtectedRoute(
 ) {
     const history = useHistory();
     const { auth } = React.useContext(MovieContext);
+    
     React.useEffect(()=>{
         if(!auth.data) history.push("/login");
     },[auth.data, history]);

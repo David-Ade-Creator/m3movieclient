@@ -27,7 +27,7 @@ function HomePage() {
   };
 
   React.useEffect(() => {
-    const fetchFavouritesMoviesData = async () => {
+    const fetchMoviesData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(requests.allMovies);
@@ -42,7 +42,7 @@ function HomePage() {
         console.log(error.response);
       }
     };
-    fetchFavouritesMoviesData();
+    fetchMoviesData();
   }, []);
 
   function truncate(str, n) {
@@ -68,17 +68,13 @@ function HomePage() {
               <Space>
                 <span className="button_primary" onClick={()=>viewMovieDetails(bannerMovie)}>Details</span>
                 <span className="button_default">
-                  <i class="bx bx-plus"></i>
+                  <i className="bx bx-plus"></i>
                 </span>
               </Space>
             </div>
           </div>
         </div>
       </div>
-      {/* <Rowcontainer
-        title="NETFLIX ORIGINALS"
-        fetchUrl={requests.fetchNetflixOriginals}
-      /> */}
       <Rowcontainer title="Trending Now" fetchUrl={requests.fetchTrending} />
       <Rowcontainer title="Top Rated" fetchUrl={requests.fetchTopRated} />
       <Rowcontainer
