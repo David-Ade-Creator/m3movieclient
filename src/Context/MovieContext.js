@@ -37,7 +37,6 @@ const MovieContextProvider = ({ children }) => {
     } else {
       window.localStorage.removeItem("authToken");
     }
-    //console.log(auth);
   };
 
   // parse the jwt token
@@ -61,14 +60,15 @@ const MovieContextProvider = ({ children }) => {
     });
   }, []);
 
-
   const logout = () => {
-    setAuth({ data:null, token:null });
+    setAuth({ data: null, token: null });
     window.localStorage.removeItem("authToken");
-  }
+  };
 
   return (
-    <MovieContext.Provider value={{ auth, setAuthToken, movieState, dispatch, logout }}>
+    <MovieContext.Provider
+      value={{ auth, setAuthToken, movieState, dispatch, logout }}
+    >
       {children}
     </MovieContext.Provider>
   );
