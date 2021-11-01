@@ -3,6 +3,7 @@ import axios from "axios";
 import { image_url } from "Components/Data";
 import requests from "Components/Data/requests";
 import PageHeader from "Components/Header";
+import AddFavourite from "Components/LayoutComponents/AddFavourite";
 import Rowcontainer from "Components/LayoutComponents/Rowcontainer";
 import { MovieContext } from "Context/MovieContext";
 import React from "react";
@@ -68,7 +69,7 @@ function HomePage() {
               <Space>
                 <span className="button_primary" onClick={()=>viewMovieDetails(bannerMovie)}>Details</span>
                 <span className="button_default">
-                  <i className="bx bx-plus"></i>
+                  <AddFavourite movie={bannerMovie} />
                 </span>
               </Space>
             </div>

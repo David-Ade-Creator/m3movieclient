@@ -30,7 +30,7 @@ function AuthPage() {
   };
 
   React.useEffect(()=>{
-    if(auth.data) history.push("/");
+    // if(auth.data) history.push("/");
   },[auth.data, history]);
 
 

@@ -1,27 +1,67 @@
+import { Avatar, Button, Popover } from "antd";
 import DetailLoader from "Components/LayoutComponents/Loaders/detailLoader";
+import { MovieContext } from "Context/MovieContext";
 import React from "react";
 import { Link } from "react-router-dom";
 
 function PageHeader({ children, pageLoading }) {
+  const { logout } = React.useContext(MovieContext);
   const [isNavbarOpen, setNavbarOpen] = React.useState(false);
+  const [scrollPosition, setScrollPosition] = React.useState(0);
 
   const toggleNavbar = () => {
     setNavbarOpen(!isNavbarOpen);
   };
 
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const content = (
+    <div>
+      <Button type="danger" onClick={logout}>
+        Logout
+      </Button>
+    </div>
+  );
+
   return (
     <React.Fragment>
-      <header className="header" id="header">
+      <header
+        className={`header ${scrollPosition >= "80" ? "scroll-header" : ""}`}
+        id="header"
+      >
         <div className="header_container container">
-          <div className="header__img">
-            <img
+          <Popover placement="bottom" content={content} trigger="hover">
+            <Avatar
+              size={44}
               src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
-              alt=""
             />
-          </div>
+          </Popover>
 
           <div className="header__toggle">
-            <i className="bx bx-menu" id="header-toggle" onClick={toggleNavbar}></i>
+            {isNavbarOpen ? (
+              <i
+                className="bx bx-x"
+                id="header-toggle"
+                onClick={toggleNavbar}
+              ></i>
+            ) : (
+              <i
+                className="bx bx-menu"
+                id="header-toggle"
+                onClick={toggleNavbar}
+              ></i>
+            )}
           </div>
         </div>
       </header>
@@ -42,20 +82,23 @@ function PageHeader({ children, pageLoading }) {
               <Link to="/" className="nav__link active">
                 <span className="nav__name">Home</span>
               </Link>
-
-              
             </div>
           </div>
 
-          <a href="/" className="nav__link" style={{marginTop:"2rem"}}>
+          <span
+            className="nav__link"
+            style={{ marginTop: "2rem", cursor: "pointer" }}
+          >
             <i className="bx bx-log-out nav__icon"></i>
-            <span className="nav__name">Log Out</span>
-          </a>
+            <span className="nav__name" onClick={logout}>
+              Log Out
+            </span>
+          </span>
         </nav>
       </div>
       <main className="body-pd">
-          {pageLoading ? <DetailLoader/> : children}
-        </main>
+        {pageLoading ? <DetailLoader /> : children}
+      </main>
     </React.Fragment>
   );
 }

@@ -61,8 +61,14 @@ const MovieContextProvider = ({ children }) => {
     });
   }, []);
 
+
+  const logout = () => {
+    setAuth({ data:null, token:null });
+    window.localStorage.removeItem("authToken");
+  }
+
   return (
-    <MovieContext.Provider value={{ auth, setAuthToken, movieState, dispatch }}>
+    <MovieContext.Provider value={{ auth, setAuthToken, movieState, dispatch, logout }}>
       {children}
     </MovieContext.Provider>
   );

@@ -5,6 +5,7 @@ import axios from "axios";
 import { image_url } from "Components/Data";
 import { MovieContext } from "Context/MovieContext";
 import MovieDetails from "Pages/HomePage/details";
+import ButtonGroup from "../Button-group";
 
 const responsive = {
   desktop: {
@@ -67,22 +68,26 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
           <div className="row_title">
               <h3>{title}</h3>
           </div>
-    {!loading ? <Carousel
+    {!loading ? <div className="slides_container"><Carousel
       additionalTransfrom={0}
+      arrows={false}
       autoPlaySpeed={3000}
       centerMode={false}
       className=""
       containerClass="carousel-container"
+      customButtonGroup={<ButtonGroup />}
       dotListClass=""
       draggable
       focusOnSelect={false}
-      infinite={false}
+      infinite={true}
+      itemClass=""
       keyBoardControl
       minimumTouchDrag={80}
       renderButtonGroupOutside
       renderDotsOutside={false}
       responsive={responsive}
       showDots={false}
+      sliderClass=""
       slidesToSlide={1}
     >
       {movies?.map(movie => {
@@ -95,7 +100,7 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
           />
         );
       })}
-    </Carousel> : <>fetching movies...</>}
+    </Carousel></div> : <>fetching movies...</>}
     </div>
   );
 };
