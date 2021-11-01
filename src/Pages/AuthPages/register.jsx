@@ -6,41 +6,37 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 function RegisterPage() {
-    const history = useHistory()
-    const { auth,setAuthToken, } = React.useContext(MovieContext);
-    const [loading,setLoading] = React.useState(false);
-    const [error,setError] = React.useState(null);
+  const history = useHistory();
+  const { auth, setAuthToken } = React.useContext(MovieContext);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
+  const onFinish = async (values) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`${base_url}/api/m3/register`, values);
+      const registerResponse = response?.data;
+      const { data } = registerResponse;
+      setAuthToken(data.token);
+      setError(null);
+      history.push("/");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
 
-    const onFinish = async (values) => {
-        try {
-        setLoading(true);
-        const response = await axios.post(`${base_url}/api/m3/register`, values);
-        const registerResponse = response?.data;
-        const {data} = registerResponse;
-        setAuthToken(data.token)
-        setError(null);
-        history.push("/")
-        setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            setError(error.response.data.message);
-        }
-        
-      };
-
-      React.useEffect(()=>{
-        if(auth.data) history.push("/");
-      },[auth.data, history]);
-
+  React.useEffect(() => {
+    if (auth.data) history.push("/");
+  }, [auth.data, history]);
 
   return (
     <div className="login_container">
       <div className="login_form_container">
         <div className="form_container">
           <Card>
-          {error && <Alert type="error" message={error} />}
-            <Alert type="error" message={error} />
+            {error && <Alert type="error" message={error} />}
             <Form layout="vertical" onFinish={onFinish}>
               <h1 style={{ marginBottom: "1rem", fontWeight: "bolder" }}>
                 Create New Account
@@ -120,12 +116,14 @@ function RegisterPage() {
                   </Form.Item>
                 </Col>
               </Row>
-              <Button htmlType="submit" type="danger" loading={loading}>Create Account</Button>
+              <Button htmlType="submit" type="danger" loading={loading}>
+                Create Account
+              </Button>
               <div className="already_signin_mini">
-            <Link to="/login">
-              <h4>Already have an account ? Login</h4>
-            </Link>
-          </div>
+                <Link to="/login">
+                  <h4>Already have an account ? Login</h4>
+                </Link>
+              </div>
             </Form>
           </Card>
         </div>
