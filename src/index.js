@@ -7,11 +7,11 @@ import "react-multi-carousel/lib/styles.css";
 import MovieContextProvider from 'Context/MovieContext';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <MovieContextProvider>
     <App />
-    </MovieContextProvider>
-  </React.StrictMode>,
+    </MovieContextProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

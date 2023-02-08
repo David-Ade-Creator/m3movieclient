@@ -56,6 +56,9 @@ const Rowcontainer = ({ deviceType, title, fetchUrl }) => {
       }
     };
     fetchFavouritesMoviesData();
+   return ()=> {
+    fetchFavouritesMoviesData()
+   }
   }, [fetchUrl]);
 
   return (

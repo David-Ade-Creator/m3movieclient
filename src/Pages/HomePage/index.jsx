@@ -40,7 +40,6 @@ function HomePage() {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.log(error.response);
       }
     };
     fetchMoviesData();
@@ -76,7 +75,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <Rowcontainer title="Trending Now" fetchUrl={requests.fetchTrending} />
+      {/* <Rowcontainer title="Trending Now" fetchUrl={requests.fetchTrending} /> */}
       <Rowcontainer title="Top Rated" fetchUrl={requests.fetchTopRated} />
       <Rowcontainer
         title="Action Movies"
